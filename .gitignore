@@ -1,9 +1,13 @@
+tmp/
+
 *.class
 
 # Package Files #
 *.jar
 *.war
 *.ear
+
+.project
 
 .gradle
 build

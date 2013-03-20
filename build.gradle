@@ -10,7 +10,6 @@ repositories {
   mavenCentral()
 }
 
-
 task clientJar(type: Jar) {
   from sourceSets.main.output.classesDir 
   include 'com/acme/**'
@@ -30,11 +29,26 @@ artifacts {
 
 dependencies {
 
-  /**
-   * This, in   uploadArchives repositories mavenDeployer, allows to 
-   * create the <scope> entry in the POM>
-   */
-  // pom.scopeMappings.addMapping(1000,configurations.api,"api")    
+  api group: 'joda-time', name: 'joda-time', version: '2.2'
+}
 
-  api group: 'joda-time', name: 'joda-time', version: '2.2', classifier: 'api'
+uploadApi {
+ repositories {
+    mavenDeployer {
+       configuration = configurations.api
+       repository(url: "file://$buildDir/repo")
+       /*
+       pom.scopeMappings.addMapping(1000,configurations.api,"api")
+       addFilter('api') {artifact, file ->
+            artifact.name == 'server-api'
+       }
+       addFilter('server') {artifact, file ->
+            artifact.name == 'server'
+       }      
+       pom('api').whenConfigured {pom ->
+          pom.dependencies = pom.dependencies.find { dep -> dep.configurations[0] == 'api' }
+       }
+       */
+    }
+  }
 }
