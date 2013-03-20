@@ -22,9 +22,20 @@ configurations {
   api
 }
 
-artifacts {
+task packageJavadoc ( type: Jar, dependsOn: 'javadoc' ) {
+  from javadoc.destinationDir
+  classifier = 'javadoc'
+}
 
-  api clientJar 
+task packageSources ( type: Jar ) {
+  from sourceSets.main.allSource
+  classifier = 'sources'
+}
+    
+artifacts {
+  archives packageJavadoc
+  archives packageSources
+  archives clientJar 
 }
 
 dependencies {
@@ -32,23 +43,25 @@ dependencies {
   api group: 'joda-time', name: 'joda-time', version: '2.2'
 }
 
-uploadApi {
+uploadArchives {
  repositories {
     mavenDeployer {
        configuration = configurations.api
+       
        repository(url: "file://$buildDir/repo")
-       /*
+       
+       // List Api dependencies
+       //project.configurations.api.files.collect { println "=========> " + it.name }
+       
        pom.scopeMappings.addMapping(1000,configurations.api,"api")
-       addFilter('api') {artifact, file ->
-            artifact.name == 'server-api'
+
+       pom.withXml { root ->
+
+			def children = root.asNode().children()
+			def deps = children.find {it.name().localPart == 'dependencies'}
+			def dep = deps.find {it.name().localPart == 'dependency'}
+			dep.children().add(0, new Node(null, 'classifier', 'apiConf'))
        }
-       addFilter('server') {artifact, file ->
-            artifact.name == 'server'
-       }      
-       pom('api').whenConfigured {pom ->
-          pom.dependencies = pom.dependencies.find { dep -> dep.configurations[0] == 'api' }
-       }
-       */
     }
   }
 }
