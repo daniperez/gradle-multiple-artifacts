@@ -30,5 +30,11 @@ artifacts {
 
 dependencies {
 
+  /**
+   * This, in   uploadArchives repositories mavenDeployer, allows to 
+   * create the <scope> entry in the POM>
+   */
+  // pom.scopeMappings.addMapping(1000,configurations.api,"api")    
+
   api group: 'joda-time', name: 'joda-time', version: '2.2', classifier: 'api'
 }
