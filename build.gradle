@@ -55,6 +55,7 @@ uploadArchives {
        
        pom.scopeMappings.addMapping(1000,configurations.api,"api")
 
+       /*
        pom.withXml { root ->
 
 			def children = root.asNode().children()
@@ -62,6 +63,7 @@ uploadArchives {
 			def dep = deps.find {it.name().localPart == 'dependency'}
 			dep.children().add(0, new Node(null, 'classifier', 'apiConf'))
        }
+       */
     }
   }
 }

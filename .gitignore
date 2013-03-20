@@ -11,3 +11,4 @@ tmp/
 
 .gradle
 build
+/bin
