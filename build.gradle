@@ -1,0 +1,34 @@
+version = '1.0'
+group = 'com.acme'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+
+
+repositories {
+  mavenCentral()
+}
+
+
+task clientJar(type: Jar) {
+  from sourceSets.main.output.classesDir 
+  include 'com/acme/**'
+  baseName = 'server'
+  classifier = 'api'
+} 
+
+
+configurations {
+  api
+}
+
+artifacts {
+
+  api clientJar 
+}
+
+dependencies {
+
+  api group: 'joda-time', name: 'joda-time', version: '2.2', classifier: 'api'
+}
