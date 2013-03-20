@@ -1,4 +1,4 @@
-version = '1.0'
+version = '2.0'
 group = 'com.acme'
 
 apply plugin: 'java'
@@ -8,47 +8,10 @@ apply plugin: 'eclipse'
 
 repositories {
   mavenCentral()
-}
-
-task clientJar(type: Jar) {
-  from sourceSets.main.output.classesDir 
-  include 'com/acme/**'
-  baseName = 'server'
-  classifier = 'api'
-} 
-
-
-configurations {
-  api
-}
-
-artifacts {
-
-  api clientJar 
+  mavenRepo ( url: "file://$buildDir/repo" )
 }
 
 dependencies {
 
-  api group: 'joda-time', name: 'joda-time', version: '2.2'
-}
-
-uploadApi {
- repositories {
-    mavenDeployer {
-       configuration = configurations.api
-       repository(url: "file://$buildDir/repo")
-       /*
-       pom.scopeMappings.addMapping(1000,configurations.api,"api")
-       addFilter('api') {artifact, file ->
-            artifact.name == 'server-api'
-       }
-       addFilter('server') {artifact, file ->
-            artifact.name == 'server'
-       }      
-       pom('api').whenConfigured {pom ->
-          pom.dependencies = pom.dependencies.find { dep -> dep.configurations[0] == 'api' }
-       }
-       */
-    }
-  }
+  compile group: 'com.acme', name: 'server', version: '1.0'
 }
