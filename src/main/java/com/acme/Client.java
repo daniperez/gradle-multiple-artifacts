@@ -6,6 +6,7 @@ public class Client {
 	
 	public Client () {
 		
+		@SuppressWarnings("unused")
 		Api api = new Api();
 	}
 }
