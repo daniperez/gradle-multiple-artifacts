@@ -10,4 +10,4 @@ Publishing the library works: the scope of the single dependency is set to "api"
 the ```client``` is not able to find it. I tried setting the scope and classifier element in the POM without
 success.
 
-You can generated the POM file with ```./gradlew install```. The pom file can be found in ```build/poms```.
+You can generated the POM file with ```./gradlew uploadArchives```. The pom file can be found in ```build/poms```.

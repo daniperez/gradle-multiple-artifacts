@@ -21,7 +21,10 @@ task clientJar(type: Jar) {
 configurations {
   api
 }
-    
+
+// You can use "api" instead of "archives", but then
+// you  have to change uploadArchives by uploadApi
+// and call uploadApi instead of uploadArchives.
 artifacts {
   archives clientJar 
 }
@@ -34,7 +37,7 @@ dependencies {
 uploadArchives {
  repositories {
     mavenDeployer {
-       configuration = configurations.api
+       //configuration = configurations.api
        
        repository(url: "file://$buildDir/repo")
        
