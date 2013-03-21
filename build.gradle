@@ -15,5 +15,5 @@ dependencies {
 
   // classifier: 'api' works with <classifier> in the dependency but then
   // it will try to get joda-time:api, which doesn't exist.
-  compile group: 'com.acme', name: 'server', version: '1.0', classifier: 'api'
+  compile group: 'com.acme', name: 'server-api', version: '1.0'
 }
