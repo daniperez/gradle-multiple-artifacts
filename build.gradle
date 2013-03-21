@@ -13,8 +13,8 @@ repositories {
 task clientJar(type: Jar) {
   from sourceSets.main.output.classesDir 
   include 'com/acme/**'
-  baseName = 'server'
-  classifier = 'api'
+  baseName = 'server-api'
+  //classifier = 'api'
 } 
 
 
@@ -44,7 +44,15 @@ uploadArchives {
        // List Api dependencies
        //project.configurations.api.files.collect { println "=========> " + it.name }
        
-       pom.scopeMappings.addMapping(1000,configurations.api,"api")
+       addFilter('api') {artifact, file ->
+          artifact.name == 'server-api'
+       }
+       
+       addFilter('server') {artifact, file ->
+          artifact.name == 'server'
+       }
+
+	   pom('api').scopeMappings.addMapping(1000,configurations.api,"api")
 
        /*
        pom.withXml { root ->
